@@ -29,6 +29,10 @@ public class Mediathek {
         }
     }
 
+    public void removeDocument(int id) {
+        documents.remove(id);
+    }
+
     public IDocument getDocument(int id) {
         return documents.get(id);
     }
