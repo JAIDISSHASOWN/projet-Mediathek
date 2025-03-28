@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="bserveur">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Projet_Mediathek/lib/bserveur.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
