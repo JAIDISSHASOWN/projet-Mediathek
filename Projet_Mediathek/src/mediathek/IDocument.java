@@ -3,8 +3,6 @@ import Exception.ReservationException;
 import Exception.EmpruntException;
 
 public interface IDocument {
-
-    public interface Document {
         int numero();
         // exception si déjà réservé ou emprunté
         void reserver (Abonne ab) throws ReservationException;
@@ -12,7 +10,6 @@ public interface IDocument {
         void emprunter(Abonne ab) throws EmpruntException;
         // sert au retour d’un document ou à l’annulation d‘une réservation
         void retourner();
-    }
 
 //    int getId();
 //    String getTitre();
