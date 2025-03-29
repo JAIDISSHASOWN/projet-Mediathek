@@ -2,26 +2,23 @@ package server.mediathek;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.ZoneId;
-import java.util.Date;
-
 
 public class Abonne {
     private int numero;
     private String nom;
-    private Date dateAnniversaire;
+    private LocalDate dateNaissance;
 
-    public Abonne (int numero, String nomDate, Date dateAnniversaire){
+
+    // on instancie comme ça
+    // Abonne ab = new Abonne(1, "Jean Dupont", LocalDate.of(2005, 6, 15));
+    public Abonne(int numero, String nom, LocalDate dateNaissance) {
         this.numero = numero;
         this.nom = nom;
-        this.dateAnniversaire = dateAnniversaire;
+        this.dateNaissance = dateNaissance;
     }
 
-    public long getAge() {
-        return Period.between(
-                dateAnniversaire.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
-                LocalDate.now()
-        ).getYears();
+    public int getAge() {
+        return Period.between(dateNaissance, LocalDate.now()).getYears();
     }
 
     public String getNom() {
@@ -30,5 +27,9 @@ public class Abonne {
 
     public int getNumero() {
         return numero;
+    }
+
+    public LocalDate getDateNaissance() {
+        return dateNaissance;
     }
 }
