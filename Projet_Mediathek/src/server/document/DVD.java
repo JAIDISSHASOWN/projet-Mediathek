@@ -1,7 +1,7 @@
 package server.document;
 
 public class DVD extends Document {
-    private boolean adulte;
+    private final boolean adulte;
 
     public DVD(int numero, String titre, boolean adulte) {
         super(numero, titre);
@@ -11,4 +11,6 @@ public class DVD extends Document {
     public boolean isAdulte() {
         return adulte;
     }
+
+
 }

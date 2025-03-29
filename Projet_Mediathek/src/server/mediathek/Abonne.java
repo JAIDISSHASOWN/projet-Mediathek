@@ -8,4 +8,12 @@ public class Abonne {
         this.numero = numero;
         this.nom = nom;
     }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
 }
