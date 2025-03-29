@@ -1,4 +1,4 @@
-package mediathek;
+package server.mediathek;
 
 public class Abonne {
     private int numero;

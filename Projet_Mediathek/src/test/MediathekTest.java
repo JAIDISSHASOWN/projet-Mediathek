@@ -1,14 +1,12 @@
 package test;
 
-import document.DVD;
-import document.Livre;
-import mediathek.IDocument;
-import mediathek.Mediathek;
+import server.document.DVD;
+import server.document.Livre;
+import server.mediathek.IDocument;
+import server.mediathek.Mediathek;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MediathekTest {
 
