@@ -29,7 +29,7 @@ public class DVD extends Document {
     @Override
     public synchronized void reserver(Abonne ab) throws ReservationException {
         if (adulte && !abonneAutorise(ab)) {
-            throw new ReservationException("Réservé aux plus de 18 ans.");
+            throw new ReservationException("Vous n’avez pas l’âge pour emprunter ce DVD.");
         }
         super.reserver(ab);
     }

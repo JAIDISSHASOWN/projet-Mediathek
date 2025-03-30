@@ -43,7 +43,8 @@ public class ServiceReservation extends Service {
             // Tentative de réservation
             try {
                 document.reserver(abonne);
-                out.println("Réservation réussie. Vous avez 1h pour venir chercher le document avant qu'on le brûle.");
+                out.println("Réservation réussie. Vous avez 1h pour venir chercher le document avant que la réservation " +
+                        "s'annule");
             } catch (ReservationException e) {
                 out.println("Échec de la réservation : " + e.getMessage());
             }

@@ -16,7 +16,7 @@ class MediathekTest {
         IDocument bersork = new Livre(1,"Bersork", 1);
         IDocument dbEvolution = new DVD(2,"Dragon ball Evolution", false);
 
-        new Mediathek();
+        //new Mediathek();
         new Mediathek(berserk);
         new Mediathek(Arrays.asList(berserk,dbEvolution));
 

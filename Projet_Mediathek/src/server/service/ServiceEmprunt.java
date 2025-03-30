@@ -20,41 +20,33 @@ public class ServiceEmprunt extends Service {
     @Override
     public void run() {
         try (
-                BufferedReader reader = new BufferedReader(new InputStreamReader(getSocket().getInputStream()));
-                PrintWriter writer = new PrintWriter(getSocket().getOutputStream(), true)
+                BufferedReader in = new BufferedReader(new InputStreamReader(getSocket().getInputStream()));
+                PrintWriter out = new PrintWriter(getSocket().getOutputStream(), true)
         ) {
-            // Lire la requête du client (format : "emprunt abonne_id document_id")
-            String request = reader.readLine();
+            // Lire les numéros depuis le client
+            int numeroAbonne = Integer.parseInt(in.readLine());
+            int numeroDocument = Integer.parseInt(in.readLine());
 
-            String[] parts = request.split(" ");
-            if (parts.length != 3 || !parts[0].equalsIgnoreCase("emprunt")) {
-                writer.println("Erreur : format invalide. Utilisation : emprunt <id_abonne> <id_document>");
-                return;
-            }
-
-            int idAbonne = Integer.parseInt(parts[1]);
-            int idDocument = Integer.parseInt(parts[2]);
-
+            // Récupération des objets
             Mediathek mediatheque = Mediathek.getInstance();
-            Abonne abonne = mediatheque.getAbonne(idAbonne);
-            IDocument document = mediatheque.getDocument(idDocument);
+            Abonne abonne = mediatheque.getAbonne(numeroAbonne);
+            IDocument document = mediatheque.getDocument(numeroDocument);
 
             if (abonne == null) {
-                writer.println("Erreur : Abonné non trouvé.");
+                out.println("Erreur : Abonné introuvable.");
                 return;
             }
-
             if (document == null) {
-                writer.println("Erreur : Document non trouvé.");
+                out.println("Erreur : Document introuvable.");
                 return;
             }
 
             // Essayer d'emprunter le document
             try {
                 document.emprunter(abonne);
-                writer.println("Succès : Document " + document.numero() + " emprunté par " + abonne.getNom());
+                out.println("Succès : Document " + document.numero() + " emprunté par " + abonne.getNom());
             } catch (EmpruntException e) {
-                writer.println("Erreur : " + e.getMessage());
+                out.println("Erreur : " + e.getMessage());
             }
 
         } catch (IOException e) {

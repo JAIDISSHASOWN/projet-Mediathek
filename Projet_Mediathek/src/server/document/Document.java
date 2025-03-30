@@ -5,12 +5,16 @@ import server.Exception.ReservationException;
 import server.mediathek.Abonne;
 import server.mediathek.IDocument;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public abstract class Document implements IDocument {
     private int numero;
     private String titre;
+    private Date dateFinReservation;
+
 
     private Abonne emprunteur = null;
     private Abonne reserveur = null;
@@ -33,7 +37,7 @@ public abstract class Document implements IDocument {
     public void reserver(Abonne ab) throws ReservationException {
         synchronized (this) {
             if (reserveur != null) {
-                throw new ReservationException("Ce document est déjà réservé par un autre abonné.");
+                throw new ReservationException("ce document est déjà reservé");
             }
             if (emprunteur != null) {
                 throw new ReservationException("Ce document est actuellement emprunté.");
@@ -42,6 +46,8 @@ public abstract class Document implements IDocument {
             // Réservation acceptée
             reserveur = ab;
             System.out.println("Document " + titre + " réservé par " + ab.getNom() + " pour 1h.");
+
+            dateFinReservation = new Date(System.currentTimeMillis() + (60 * 60 * 1000));
 
             // Lancer un timer pour annuler la réservation après 1h
             timerReservation = new Timer();
@@ -72,7 +78,9 @@ public abstract class Document implements IDocument {
                 throw new EmpruntException("Ce document est déjà emprunté.");
             }
             if (reserveur != null && !reserveur.equals(ab)) {
-                throw new EmpruntException("Ce document est réservé par un autre abonné.");
+                SimpleDateFormat sdf = new SimpleDateFormat("HH'h'mm");
+                String heureFin = sdf.format(dateFinReservation);
+                throw new EmpruntException("Ce document est réservé jusqu’à " + heureFin + ".");
             }
 
             // Annuler la réservation si l'emprunteur est bien celui qui l'a réservé

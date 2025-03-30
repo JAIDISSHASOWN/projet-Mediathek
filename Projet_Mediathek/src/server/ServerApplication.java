@@ -1,15 +1,12 @@
 package server;
 
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 import com.unodos.Server;
 import server.service.ServiceEmprunt;
 import server.service.ServiceReservation;
 import server.service.ServiceRetour;
 
-import java.io.IOException;
 public class ServerApplication {
 
     private final static int RESERVATION_PORT = 2000;
@@ -27,6 +24,6 @@ public class ServerApplication {
             } catch (IOException e) {
                 System.err.println("Erreur lors de la céation du serveur : " + e.getMessage());
             }
-        }
     }
 }
+

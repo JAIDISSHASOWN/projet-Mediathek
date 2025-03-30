@@ -24,15 +24,17 @@ public class ClientApplication {
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              Scanner scanner = new Scanner(System.in)){
 
-            // Demander le numéro d'abonné
-            System.out.print("Entrez votre numéro d'abonné : ");
-            String numAbonne = scanner.nextLine();
-            out.println(numAbonne); // Envoyer au serveur
-
+            if (port == 2000 || port == 3000) {
+                // Demander le numéro d'abonné
+                System.out.print("Entrez votre numéro d'abonné : ");
+                String numAbonne = scanner.nextLine();
+                out.println(numAbonne); // Envoyer au serveur
+            }
             // Demander le numéro du document
             System.out.print("Entrez le numéro du document : ");
             String numDocument = scanner.nextLine();
             out.println(numDocument); // Envoyer au serveur
+
 
             String response = in.readLine();
             System.out.println("Réponse du serveur: " + response);
