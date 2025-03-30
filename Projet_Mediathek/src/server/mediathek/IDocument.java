@@ -1,6 +1,6 @@
 package server.mediathek;
-import server.Exception.ReservationException;
-import server.Exception.EmpruntException;
+import server.exception.ReservationException;
+import server.exception.EmpruntException;
 
 public interface IDocument {
         int numero();

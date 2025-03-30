@@ -12,6 +12,7 @@ public class ClientApplication {
             return;
         }
 
+        //Recuperation du port pour acceder au service
         int port;
         try {
             port = Integer.parseInt(args[0]);

@@ -1,4 +1,4 @@
-package server.Exception;
+package server.exception;
 
 public class EmpruntException extends Exception{
     public EmpruntException(String message) {

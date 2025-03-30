@@ -14,6 +14,7 @@ public class ServerApplication {
     private final static int RETOUR_PORT = 4000;
 
     public static void main(String[] args) {
+            //Creation de Threads pour chaque service
             try {
                 new Thread(new Server(ServiceReservation.class, RESERVATION_PORT)).start();
                 System.out.println("Serveur de réservation lancé sur le port " + RESERVATION_PORT);

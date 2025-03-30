@@ -5,8 +5,7 @@ import server.mediathek.IDocument;
 import server.mediathek.Mediathek;
 
 import server.mediathek.Abonne;
-import server.document.Document;
-import server.Exception.ReservationException;
+import server.exception.ReservationException;
 
 import java.io.*;
 import java.net.Socket;

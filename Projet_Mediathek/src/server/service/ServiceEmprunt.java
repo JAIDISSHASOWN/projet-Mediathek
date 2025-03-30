@@ -1,10 +1,9 @@
 package server.service;
 
 import com.unodos.Service;
-import server.document.Document;
 import server.mediathek.Abonne;
 
-import server.Exception.EmpruntException;
+import server.exception.EmpruntException;
 import server.mediathek.IDocument;
 import server.mediathek.Mediathek;
 

@@ -1,7 +1,7 @@
 package server.document;
 
-import server.Exception.EmpruntException;
-import server.Exception.ReservationException;
+import server.exception.EmpruntException;
+import server.exception.ReservationException;
 import server.mediathek.Abonne;
 import server.mediathek.IDocument;
 

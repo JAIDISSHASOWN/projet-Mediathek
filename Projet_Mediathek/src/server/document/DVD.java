@@ -1,7 +1,7 @@
 package server.document;
 
-import server.Exception.EmpruntException;
-import server.Exception.ReservationException;
+import server.exception.EmpruntException;
+import server.exception.ReservationException;
 import server.mediathek.Abonne;
 
 import java.time.LocalDate;
@@ -28,6 +28,7 @@ public class DVD extends Document {
 
     @Override
     public synchronized void reserver(Abonne ab) throws ReservationException {
+        // Vérifie si l'abonné a au moins 16 ans
         if (adulte && !abonneAutorise(ab)) {
             throw new ReservationException("Vous n’avez pas l’âge pour emprunter ce DVD.");
         }
@@ -36,6 +37,7 @@ public class DVD extends Document {
 
     @Override
     public synchronized void emprunter(Abonne ab) throws EmpruntException {
+        // Vérifie si l'abonné a au moins 16 ans
         if (adulte && !abonneAutorise(ab)) {
             throw new EmpruntException("Réservé aux plus de 18 ans.");
         }
