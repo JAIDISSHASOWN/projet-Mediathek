@@ -12,9 +12,9 @@ import server.service.ServiceRetour;
 import java.io.IOException;
 public class ServerApplication {
 
-    private final static int RESERVATION_PORT = 3000;
-    private final static int EMPRUNT_PORT = 4000;
-    private final static int RETOUR_PORT = 5000;
+    private final static int RESERVATION_PORT = 2000;
+    private final static int EMPRUNT_PORT = 3000;
+    private final static int RETOUR_PORT = 4000;
 
     public static void main(String[] args) {
             try {
