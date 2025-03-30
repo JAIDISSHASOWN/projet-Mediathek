@@ -30,65 +30,73 @@ public abstract class Document implements IDocument {
     }
 
     @Override
-    public synchronized void reserver(Abonne ab) throws ReservationException {
-        if (reserveur != null) {
-            throw new ReservationException("Ce document est déjà réservé par un autre abonné.");
-        }
-        if (emprunteur != null) {
-            throw new ReservationException("Ce document est actuellement emprunté.");
-        }
+    public void reserver(Abonne ab) throws ReservationException {
+        synchronized (this) {
+            if (reserveur != null) {
+                throw new ReservationException("Ce document est déjà réservé par un autre abonné.");
+            }
+            if (emprunteur != null) {
+                throw new ReservationException("Ce document est actuellement emprunté.");
+            }
 
-        // Réservation acceptée
-        reserveur = ab;
-        System.out.println("Document " + titre + " réservé par " + ab.getNom() + " pour 1h.");
+            // Réservation acceptée
+            reserveur = ab;
+            System.out.println("Document " + titre + " réservé par " + ab.getNom() + " pour 1h.");
 
-        // Lancer un timer pour annuler la réservation après 1h
-        timerReservation = new Timer();
-        timerReservation.schedule(new TimerTask() {
-            @Override
-            public void run() {
+            // Lancer un timer pour annuler la réservation après 1h
+            timerReservation = new Timer();
+            timerReservation.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    annulerReservation();
+                }
+            }, 60 * 60 * 1000); // 1 heure en millisecondes
+        }
+    }
+
+    private void annulerReservation() {
+        synchronized (this) {
+            System.out.println("La réservation du document " + titre + " a expiré.");
+            reserveur = null;
+            if (timerReservation != null) {
+                timerReservation.cancel();
+                timerReservation = null;
+            }
+        }
+    }
+
+    @Override
+    public void emprunter(Abonne ab) throws EmpruntException {
+        synchronized (this) {
+            if (emprunteur != null) {
+                throw new EmpruntException("Ce document est déjà emprunté.");
+            }
+            if (reserveur != null && !reserveur.equals(ab)) {
+                throw new EmpruntException("Ce document est réservé par un autre abonné.");
+            }
+
+            // Annuler la réservation si l'emprunteur est bien celui qui l'a réservé
+            if (reserveur != null && reserveur.equals(ab)) {
                 annulerReservation();
             }
-        }, 60 * 60 * 1000); // 1 heure en millisecondes
-    }
 
-    private synchronized void annulerReservation() {
-        System.out.println("La réservation du document " + titre + " a expiré.");
-        reserveur = null;
-        if (timerReservation != null) {
-            timerReservation.cancel();
-            timerReservation = null;
+            // Emprunt accepté
+            emprunteur = ab;
+            System.out.println("Document " + titre + " emprunté par " + ab.getNom() + ".");
         }
     }
 
     @Override
-    public synchronized void emprunter(Abonne ab) throws EmpruntException {
-        if (emprunteur != null) {
-            throw new EmpruntException("Ce document est déjà emprunté.");
-        }
-        if (reserveur != null && !reserveur.equals(ab)) {
-            throw new EmpruntException("Ce document est réservé par un autre abonné.");
-        }
+    public void retourner() {
+            synchronized (this) {
+                if (emprunteur == null && reserveur == null) {
+                    System.out.println("Aucun emprunteur ou réservation pour ce document.");
+                    return;
+                }
 
-        // Annuler la réservation si l'emprunteur est bien celui qui l'a réservé
-        if (reserveur != null && reserveur.equals(ab)) {
-            annulerReservation();
+                System.out.println("Document " + titre + " retourné.");
+                emprunteur = null;
+                annulerReservation();
+            }
         }
-
-        // Emprunt accepté
-        emprunteur = ab;
-        System.out.println("Document " + titre + " emprunté par " + ab.getNom() + ".");
-    }
-
-    @Override
-    public synchronized void retourner() {
-        if (emprunteur == null && reserveur == null) {
-            System.out.println("Aucun emprunteur ou réservation pour ce document.");
-            return;
-        }
-
-        System.out.println("Document " + titre + " retourné.");
-        emprunteur = null;
-        annulerReservation();
-    }
 }
